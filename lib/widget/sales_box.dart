@@ -95,12 +95,11 @@ class SalesBoxWidget extends StatelessWidget {
     }
   }
 
-  Widget _item(
-      BuildContext context, CommonModel model, bool isLeft, bool isLast) {
+  Widget _item(BuildContext context, CommonModel model, bool isBig, bool isLeft,
+      bool isLast) {
+    BorderSide borderSide = BorderSide(width: 0.8, color: Color(0xfff2f2f7));
     //Expanded这个控件会把同级别的控件，在父控件中填充满整个父控件
-    return Expanded(
-      flex: 1,
-      child: GestureDetector(
+    return GestureDetector(
         onTap: () {
 //路由 页面跳转
           Navigator.push(
@@ -112,21 +111,19 @@ class SalesBoxWidget extends StatelessWidget {
                         hideAppBar: model.hideAppBar,
                       )));
         },
-        child: Column(
-          children: <Widget>[
-            Image.network(
-              model.icon,
-              width: 18,
-              height: 18,
-            ),
-            Padding(
-              child: Text(model.title, style: TextStyle(fontSize: 12)),
-              padding: EdgeInsets.only(top: 3),
-            )
-          ],
-        ),
-      ),
-    );
+        child: Container(
+          decoration: BoxDecoration(
+              border: Border(
+                  right: isLeft ? borderSide : BorderSide.none,
+                  bottom: isLast ? BorderSide.none : borderSide)),
+          child: Image.network(
+            model.icon,
+            //MediaQuery 获取屏幕宽度
+            width: MediaQuery.of(context).size.width / 2 - 10,
+            height: isBig ? 129 : 80,
+            fit: BoxFit.fill,
+          ),
+        ));
   }
 
   Widget _doubleItem(BuildContext context, CommonModel leftCard,
@@ -134,8 +131,8 @@ class SalesBoxWidget extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: <Widget>[
-        _item(context, leftCard, true, isLast),
-        _item(context, rightCard, false, isLast)
+        _item(context, leftCard, isBig, true, isLast),
+        _item(context, rightCard, isBig, false, isLast)
       ],
     );
   }
