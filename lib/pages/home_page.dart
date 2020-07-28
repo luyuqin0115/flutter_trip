@@ -125,25 +125,30 @@ class _HomePageState extends State<HomePage> {
         Container(
           height: 160,
           //轮播图
-          child: Swiper(
-              itemCount: bannerList.length,
-              autoplay: true,
-              onTap: (index) {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => WebView(
-                              url: bannerList[index].url,
-                            )));
-              },
-              itemBuilder: (BuildContext context, int index) {
-                return Image.network(
-                  bannerList[index].icon,
-                  fit: BoxFit.fill,
-                );
-              },
-              //轮播图指示器
-              pagination: SwiperPagination()),
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Swiper(
+                  itemCount: bannerList.length,
+                  autoplay: true,
+                  onTap: (index) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => WebView(
+                                  url: bannerList[index].url,
+                                )));
+                  },
+                  itemBuilder: (BuildContext context, int index) {
+                    return Image.network(
+                      bannerList[index].icon,
+                      fit: BoxFit.fill,
+                    );
+                  },
+                  //轮播图指示器
+                  pagination: SwiperPagination()),
+            ),
+          ),
         ),
         Padding(
           padding: EdgeInsets.fromLTRB(7, 4, 7, 4),
